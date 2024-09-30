@@ -56,9 +56,19 @@ const Home = ({navigation}) => {
   const [startLocation, setStartLocation] = useState(null);
   console.log('start', startLocation);
   const [endLocation, setEndLocation] = useState(null);
-  console.log('start', endLocation);
+  console.log('enddd', endLocation);
   const [myLocation, setMyLocation] = useState(region);
 
+  const [region, setRegion] = useState({
+    latitude: 43.0,
+    longitude: -75.0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+  const mapRef = useRef(null);
+  const dispatch = useDispatch();
+
+  console.log('regionnnn', region);
   const handleDirectionsReady = result => {
     result?.coordinates;
   };
@@ -93,15 +103,6 @@ const Home = ({navigation}) => {
       1000,
     );
   };
-
-  const [region, setRegion] = useState({
-    latitude: 43.0,
-    longitude: -75.0,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
-  const mapRef = useRef(null);
-  const dispatch = useDispatch();
 
   // Function to handle place selection
 
@@ -334,6 +335,7 @@ const Home = ({navigation}) => {
     // setModalVisible(false);
   };
   const toggleDistinationModal = () => {
+    console.log('presssed');
     setSelectDistinationVisible(!isSelectDistinationVisible);
   };
   const nearByData = [
@@ -456,7 +458,19 @@ const Home = ({navigation}) => {
             </Marker>
           ) : null}
           {endLocation ? (
-            <Marker title="End Location" coordinate={endLocation?.coordinate} />
+            <Marker title="End Location" coordinate={endLocation?.coordinate}>
+              <View style={{width: 50, height: 50}}>
+                <Image
+                  source={images.markerImage} // Your marker image source
+                  style={{
+                    flex: 1,
+                    width: null,
+                    height: null,
+                    resizeMode: 'contain',
+                  }}
+                />
+              </View>
+            </Marker>
           ) : null}
           {startLocation && endLocation ? (
             <MapViewDirections
@@ -1176,7 +1190,7 @@ const Home = ({navigation}) => {
                       </View>
                     </View>
                     <CustomButton
-                      style={{top: 20}}
+                      // style={{top: 20}}
                       buttonText={'Make Payment'}
                       onPress={() => toggleConfirm()}
                     />
